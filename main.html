@@ -1,22 +1,38 @@
-<html> 
-   <head> 
-      <title>Text To Speech</title> 
-		
-      <script> 
-         var droid = new Android(); 
-         var speak = function(){ 
-            droid.postEvent("say",document.getElementById("say").value); 
-         } 
-      </script> 
-		
-   </head>
-	
-   <body> 
-      <form onsubmit = "speak()";return false;”> 
-         <label for = "say">What is your message?</label> 
-         <input type = "text" id = "say"/> 
-         <input type = "submit" value = "Speak"/> 
-      </form> 
-   </body> 
-	
+<html>
+<head>
+<title>Androino</title>
+
+<style>
+body {
+    background: #32323D;
+}
+div#content {
+    padding-top:100px;
+    width:150px;
+    margin:auto;
+}
+div#output {
+    border:1px solid black;
+    background:white;
+    text-align:center;
+}
+</style>
+
+<script>
+var droid = new Android();
+var fetch_data = function() {
+    // fire the event that the python script is waiting for.
+    droid.eventPost('fetch_data', '');
+}
+
+</script>
+
+</head>
+
+<body>
+<div id="content">
+    <div id="output">-</div>
+    <button onclick="fetch_data();">get sensor data</button>
+</div>
+</body>
 </html>
