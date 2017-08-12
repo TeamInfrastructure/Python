@@ -39,7 +39,6 @@ iNotifyPrint = NotifySpeak()
 
 def CheckIfInsideCoordinate(dataX,dataY,gpsX,gpsY,radius):
     d = math.sqrt( ((dataX-gpsX)**2) + ((dataY-gpsY)**2) )
-    print d, radius
     if(radius>=d):
         return (True,d)
     return (False,d)
@@ -90,6 +89,7 @@ def main():
                     b = CheckIfInsideCoordinate(x,y,gpsx,gpsy,radiusOfNotif)
                     if(b[0]):
                         msg = "There is an construction on-going at %s from %s to %s in %.2f miles" % (projStreet, fromStreet,toStreet, b[1])
+                        droid.vibrate(1000)
                         iNotifyPrint.Notify(msg)
                         return
             pass
