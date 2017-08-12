@@ -1,3 +1,7 @@
+import android
+droid = android.Android()
+
+
 import math
 import json
 
@@ -6,9 +10,10 @@ class DummyGPS:
         return (5,5);
 
 
-
+filename = 'residential.json'
+filename = '/storage/emulated/0/sl4a/scripts/residential.json'
 str = None
-with open('residential.json') as f:
+with open(filename) as f:
     str = f.read();
 
 j = json.loads(str)
@@ -30,3 +35,4 @@ assert(b[0]==True)
 b = CheckIfInsideCoordinate(5,5,10,10,10)
 assert(b[0]==False)
 
+print "Done"
