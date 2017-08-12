@@ -44,6 +44,10 @@ def CheckIfInsideCoordinate(dataX,dataY,gpsX,gpsY,radius):
     return (False,d)
 
 
+def CheckIfCurrentDateValid(endDate,startDate,currentYear, estYear, currentMonth):
+    if(estYear!=currentYear): return False
+    return (startDate<=currentMonth and endDate>=currentMonth)
+
 b = CheckIfInsideCoordinate(5,5,10,10,4)
 assert(b[0]==False)
 b = CheckIfInsideCoordinate(5,5,10,10,10)
@@ -64,6 +68,9 @@ for lstFeature in lstFeatures:
         estStartMonthInt = datetime.datetime.strptime(estStart, '%B').date().month
     if(estEnd):
         estEndMonthInt = datetime.datetime.strptime(estEnd, '%B').date().month
+    if(estStart and estEnd): continue
 
+    if(CheckIfCurrentDateValid(estEndMonthInt,estStartMonthInt,dtNow.year,year,dtNow.month)):
+        pass
 
 print "Done"
