@@ -2,27 +2,14 @@
 <head>
 <title>Androino</title>
 
-<style>
-body {
-    background: #32323D;
-}
-div#content {
-    padding-top:100px;
-    width:150px;
-    margin:auto;
-}
-div#output {
-    border:1px solid black;
-    background:white;
-    text-align:center;
-}
-</style>
+
 
 <script>
 var droid = new Android();
 var fetch_data = function() {
     // fire the event that the python script is waiting for.
-    droid.eventPost('fetch_data', '');
+    
+    droid.eventPost('fetch_data', txtData.value);
 }
 
 </script>
@@ -31,8 +18,8 @@ var fetch_data = function() {
 
 <body>
 <div id="content">
-    <div id="output">-</div>
-    <button onclick="fetch_data();">get sensor data</button>
+     <input id="txtData" type="text" value="5" /></div>
+    <button onclick="fetch_data();">Set Radius</button>
 </div>
 </body>
 </html>
