@@ -57,40 +57,43 @@ assert(b[0]==True)
 dtNow = datetime.datetime.now()
 lstFeatures = j['features']
 
-ctr =0
-for lstFeature in lstFeatures:
-    #print ctr
-    ctr+=1
-    prop = lstFeature['properties']
-    projStreet = prop['ProjStreet']
-    fromStreet=prop['FromStreet']
-    SHAPE_Area = prop['SHAPE_Area']
-    toStreet =prop['ToStreet']
-    year = int(prop['Year'])
-    estStart = prop['EstStart']
-    estEnd = prop['EstEnd']
-    estStartMonthInt = 1
-    estEndMonthInt = 12
+def main():
+    ctr =0
+    for lstFeature in lstFeatures:
+        #print ctr
+        ctr+=1
+        prop = lstFeature['properties']
+        projStreet = prop['ProjStreet']
+        fromStreet=prop['FromStreet']
+        SHAPE_Area = prop['SHAPE_Area']
+        toStreet =prop['ToStreet']
+        year = int(prop['Year'])
+        estStart = prop['EstStart']
+        estEnd = prop['EstEnd']
+        estStartMonthInt = 1
+        estEndMonthInt = 12
 
-    if(estStart):
-        estStartMonthInt = datetime.datetime.strptime(estStart, '%B').date().month
-    if(estEnd):
-        estEndMonthInt = datetime.datetime.strptime(estEnd, '%B').date().month
-    if(CheckIfCurrentDateValid(estEndMonthInt,estStartMonthInt,dtNow.year,year,dtNow.month)):
-        coords = lstFeature['geometry']['coordinates']
-        for coord in coords:
-            for c in coord:
-                x = c[0]
-                y = c[1]
-                gpsdata = gps.GetLocation()
-                gpsx = gpsdata[0]
-                gpsy = gpsdata[1]
+        if(estStart):
+            estStartMonthInt = datetime.datetime.strptime(estStart, '%B').date().month
+        if(estEnd):
+            estEndMonthInt = datetime.datetime.strptime(estEnd, '%B').date().month
+        if(CheckIfCurrentDateValid(estEndMonthInt,estStartMonthInt,dtNow.year,year,dtNow.month)):
+            coords = lstFeature['geometry']['coordinates']
+            for coord in coords:
+                for c in coord:
+                    x = c[0]
+                    y = c[1]
+                    gpsdata = gps.GetLocation()
+                    gpsx = gpsdata[0]
+                    gpsy = gpsdata[1]
 
-                b = CheckIfInsideCoordinate(x,y,gpsx,gpsy,radiusOfNotif)
-                if(b[0]):
-                    msg = "There is an construction on-going at %s from %s to %s in %.2f miles" % (projStreet, fromStreet,toStreet, b[1])
-                    iNotifyPrint.Notify(msg)
-                    # droid.dismiss()
-        pass
+                    b = CheckIfInsideCoordinate(x,y,gpsx,gpsy,radiusOfNotif)
+                    if(b[0]):
+                        msg = "There is an construction on-going at %s from %s to %s in %.2f miles" % (projStreet, fromStreet,toStreet, b[1])
+                        iNotifyPrint.Notify(msg)
+                        return
+            pass
+
+main()
 
 print "Done"
