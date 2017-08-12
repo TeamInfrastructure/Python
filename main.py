@@ -115,7 +115,11 @@ while True:
     gps = DummyGPSUniv()
 
     radius = int(result['data'])
-    jsonDataAlgo(radius)
+
+    if(radius == -1):
+        droid.startActivity('android.intent.action.VIEW', 'https://www.google.com/maps/@30.68472,-89.5968968', None,None, False, None, None)
+    else:
+        jsonDataAlgo(radius)
 #   droid.ttsSpeak(result["data"])
 
 print "Done"

@@ -11,6 +11,15 @@ var fetch_data = function() {
     
     droid.eventPost('fetch_data', txtData.value);
 }
+
+var opengGoogleMaps = function () {
+    // fire the event that the python script is waiting for.
+
+	droid.eventPost('fetch_data', "-1");
+   
+}
+
+
 </script>
 
 </head>
@@ -23,6 +32,9 @@ var fetch_data = function() {
      <input id="txtData" type="text" value="5" style="background-color: #99CCFF; font-size: large;" /><br />
      <br />
     <button onclick="fetch_data();" style="background-color:#99CCFF; height: 58px; width: 267px; font-size: large; margin-left: 0px;">Is there a construction?</button>
+     <br />
+     <br />
+    <button onclick="opengGoogleMaps();" style="background-color:#99CCFF; height: 58px; width: 267px; font-size: large; margin-left: 0px; margin-right: 4px;">Open Google Maps</button>
      <br />
     <br />
     <input type="button" value="Exit" onclick="droid.dismiss();" style="background-color: #99CCFF; width: 116px; height: 62px; font-size: large;" align="middle" />
