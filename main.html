@@ -1,0 +1,22 @@
+<html> 
+   <head> 
+      <title>Text To Speech</title> 
+		
+      <script> 
+         var droid = new Android(); 
+         var speak = function(){ 
+            droid.postEvent("say",document.getElementById("say").value); 
+         } 
+      </script> 
+		
+   </head>
+	
+   <body> 
+      <form onsubmit = "speak()";return false;”> 
+         <label for = "say">What is your message?</label> 
+         <input type = "text" id = "say"/> 
+         <input type = "submit" value = "Speak"/> 
+      </form> 
+   </body> 
+	
+</html>
