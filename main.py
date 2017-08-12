@@ -104,13 +104,15 @@ def jsonDataAlgo(radius):
 
 while True:
     result = droid.eventWaitFor('fetch_data').result
-    resuniv = droid.eventWaitFor('fetch_data_univst').result
-    loc = (resuniv['data'])
-    print "loc is", loc
-    if(loc=='1'): # harvard
-        gps = DummyGPS()
-    else:#univ st
-        gps = DummyGPSUniv()
+    #loc = (resuniv['data'])
+    # print "loc is", loc
+    # if(loc=='1'): # harvard
+    #     gps = DummyGPS()
+    # else:#univ st
+    #     gps = DummyGPSUniv()
+
+    #gps = DummyGPS()
+    gps = DummyGPSUniv()
 
     radius = int(result['data'])
     jsonDataAlgo(radius)
