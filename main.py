@@ -10,6 +10,17 @@ class DummyGPS:
         return (5,5);
 
 
+class NotifySpeak:
+    def Notify(self,msg):
+        droid.ttsSpeak(msg)
+
+class NotifyPrint:
+    def Notify(self,msg):
+        print msg
+
+
+
+
 filename = 'residential.json'
 filename = '/storage/emulated/0/sl4a/scripts/residential.json'
 str = None
@@ -22,6 +33,8 @@ gps = DummyGPS()
 #gps = SL4AGPS()
 
 radiusOfNotif = 5
+iNotifyPrint = NotifyPrint()
+#iNotifyPrint = NotifySpeak()
 
 def CheckIfInsideCoordinate(dataX,dataY,gpsX,gpsY,radius):
     d = math.sqrt( (dataX-gpsX)**2 + (dataY-gpsY)**2 )
