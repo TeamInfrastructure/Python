@@ -34,8 +34,8 @@ gps = DummyGPS()
 #gps = SL4AGPS()
 
 radiusOfNotif = 5
-iNotifyPrint = NotifyPrint()
-#iNotifyPrint = NotifySpeak()
+#iNotifyPrint = NotifyPrint()
+iNotifyPrint = NotifySpeak()
 
 def CheckIfInsideCoordinate(dataX,dataY,gpsX,gpsY,radius):
     d = math.sqrt( (dataX-gpsX)**2 + (dataY-gpsY)**2 )
@@ -55,22 +55,33 @@ assert(b[0]==True)
 
 dtNow = datetime.datetime.now()
 lstFeatures = j['features']
+
 for lstFeature in lstFeatures:
     prop = lstFeature['properties']
     projStreet = prop['ProjStreet']
-    year = prop['Year']
+    year = int(prop['Year'])
     estStart = prop['EstStart']
     estEnd = prop['EstEnd']
-    estStartMonthInt = 0
-    estEndMonthInt = 0
+    estStartMonthInt = 1
+    estEndMonthInt = 12
 
     if(estStart):
         estStartMonthInt = datetime.datetime.strptime(estStart, '%B').date().month
     if(estEnd):
         estEndMonthInt = datetime.datetime.strptime(estEnd, '%B').date().month
-    if(estStart and estEnd): continue
-
     if(CheckIfCurrentDateValid(estEndMonthInt,estStartMonthInt,dtNow.year,year,dtNow.month)):
+        coords = lstFeature['geometry']['coordinates']
+        for coord in coords:
+            for c in coord:
+                x = c[0]
+                y = c[1]
+                gpsx = gps.GetLocation()
+                gpsy = gps.GetLocation()
+                b = CheckIfInsideCoordinate(x,y,gpsx,gpsy,radiusOfNotif)
+                if(b[0]):
+                    msg = "There is an construction on-going at %s in %f miles" % (projStreet, b[1])
+                    iNotifyPrint.Notify(msg)
+                    droid.dismiss()
         pass
 
 print "Done"
