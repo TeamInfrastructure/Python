@@ -8,7 +8,7 @@ import datetime
 
 class DummyGPS:
     def GetLocation(self):
-        return (5,5);
+        return (2463830,1480081);
 
 
 class NotifySpeak:
@@ -23,7 +23,7 @@ class NotifyPrint:
 
 
 filename = 'residential.json'
-#filename = '/storage/emulated/0/sl4a/scripts/residential.json'
+# filename = '/storage/emulated/0/sl4a/scripts/residential.json'
 str = None
 with open(filename) as f:
     str = f.read();
@@ -34,11 +34,12 @@ gps = DummyGPS()
 #gps = SL4AGPS()
 
 radiusOfNotif = 5
-#iNotifyPrint = NotifyPrint()
-iNotifyPrint = NotifySpeak()
+iNotifyPrint = NotifyPrint()
+#iNotifyPrint = NotifySpeak()
 
 def CheckIfInsideCoordinate(dataX,dataY,gpsX,gpsY,radius):
-    d = math.sqrt( (dataX-gpsX)**2 + (dataY-gpsY)**2 )
+    d = math.sqrt( ((dataX-gpsX)**2) + ((dataY-gpsY)**2) )
+    print d, radius
     if(radius>=d):
         return (True,d)
     return (False,d)
@@ -56,9 +57,15 @@ assert(b[0]==True)
 dtNow = datetime.datetime.now()
 lstFeatures = j['features']
 
+ctr =0
 for lstFeature in lstFeatures:
+    #print ctr
+    ctr+=1
     prop = lstFeature['properties']
     projStreet = prop['ProjStreet']
+    fromStreet=prop['FromStreet']
+    SHAPE_Area = prop['SHAPE_Area']
+    toStreet =prop['ToStreet']
     year = int(prop['Year'])
     estStart = prop['EstStart']
     estEnd = prop['EstEnd']
@@ -75,13 +82,15 @@ for lstFeature in lstFeatures:
             for c in coord:
                 x = c[0]
                 y = c[1]
-                gpsx = gps.GetLocation()
-                gpsy = gps.GetLocation()
+                gpsdata = gps.GetLocation()
+                gpsx = gpsdata[0]
+                gpsy = gpsdata[1]
+
                 b = CheckIfInsideCoordinate(x,y,gpsx,gpsy,radiusOfNotif)
                 if(b[0]):
-                    msg = "There is an construction on-going at %s in %f miles" % (projStreet, b[1])
+                    msg = "There is an construction on-going at %s from %s to %s in %.2f miles" % (projStreet, fromStreet,toStreet, b[1])
                     iNotifyPrint.Notify(msg)
-                    droid.dismiss()
+                    # droid.dismiss()
         pass
 
 print "Done"
