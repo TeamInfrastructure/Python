@@ -25,14 +25,14 @@ radiusOfNotif = 5
 
 def CheckIfInsideCoordinate(dataX,dataY,gpsX,gpsY,radius):
     d = math.sqrt( (dataX-gpsX)**2 + (dataY-gpsY)**2 )
-    if(radius<=d):
+    if(radius>=d):
         return (True,d)
     return (False,d)
 
 
 b = CheckIfInsideCoordinate(5,5,10,10,4)
-assert(b[0]==True)
-b = CheckIfInsideCoordinate(5,5,10,10,10)
 assert(b[0]==False)
+b = CheckIfInsideCoordinate(5,5,10,10,10)
+assert(b[0]==True)
 
 print "Done"
