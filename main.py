@@ -7,10 +7,13 @@ import math
 import json
 import datetime
 
-class DummyGPS:
+class DummyGPS: #harvard
     def GetLocation(self):
         return (2463830,1480081);
 
+class DummyGPSUniv: #columbine
+    def GetLocation(self):
+        return (2447731,1514886);
 
 class NotifySpeak:
     def Notify(self,msg):
@@ -100,9 +103,17 @@ def jsonDataAlgo(radius):
 
 
 while True:
-   result = droid.eventWaitFor('fetch_data').result
-   radius = int(result['data'])
-   jsonDataAlgo(radius)
+    result = droid.eventWaitFor('fetch_data').result
+    resuniv = droid.eventWaitFor('fetch_data_univst').result
+    loc = (resuniv['data'])
+    print "loc is", loc
+    if(loc=='1'): # harvard
+        gps = DummyGPS()
+    else:#univ st
+        gps = DummyGPSUniv()
+
+    radius = int(result['data'])
+    jsonDataAlgo(radius)
 #   droid.ttsSpeak(result["data"])
 
 print "Done"

@@ -10,6 +10,13 @@ var fetch_data = function() {
     // fire the event that the python script is waiting for.
     
     droid.eventPost('fetch_data', txtData.value);
+    droid.eventPost('fetch_data_univst', '1');
+}
+
+var fetch_data_univst = function()
+{
+    droid.eventPost('fetch_data', txtData.value);
+    droid.eventPost('fetch_data_univst', '2');
 }
 
 </script>
@@ -22,7 +29,12 @@ var fetch_data = function() {
      <br />
      <input id="txtData" type="text" value="5" style="background-color: #99CCFF; font-size: large;" /><br />
      <br />
-    <button onclick="fetch_data();" style="background-color:#99CCFF; height: 44px; width: 148px; font-size: large;">Set Radius</button>
+    <button onclick="fetch_data();" style="background-color:#99CCFF; height: 44px; width: 480px; font-size: large; margin-left: 0px;">Query the DataSets (you are at Harvard)</button>
+        <br />
+     <br />
+        <button onclick="fetch_data_univst();" style="background-color:#99CCFF; height: 72px; width: 480px; font-size: large; margin-left: 0px; margin-top: 0px;">Query the DataSets (you are at 
+            <br />
+            Columbine Dr.)</button>
      <br />
     <br />
     <input type="button" value="Exit" onclick="droid.dismiss();" style="background-color: #99CCFF; width: 116px; height: 74px; font-size: large;" align="middle" />
