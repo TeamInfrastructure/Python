@@ -1,9 +1,10 @@
-import android
-droid = android.Android()
+# import android
+# droid = android.Android()
 
 
 import math
 import json
+import datetime
 
 class DummyGPS:
     def GetLocation(self):
@@ -22,7 +23,7 @@ class NotifyPrint:
 
 
 filename = 'residential.json'
-filename = '/storage/emulated/0/sl4a/scripts/residential.json'
+#filename = '/storage/emulated/0/sl4a/scripts/residential.json'
 str = None
 with open(filename) as f:
     str = f.read();
@@ -47,5 +48,22 @@ b = CheckIfInsideCoordinate(5,5,10,10,4)
 assert(b[0]==False)
 b = CheckIfInsideCoordinate(5,5,10,10,10)
 assert(b[0]==True)
+
+dtNow = datetime.datetime.now()
+lstFeatures = j['features']
+for lstFeature in lstFeatures:
+    prop = lstFeature['properties']
+    projStreet = prop['ProjStreet']
+    year = prop['Year']
+    estStart = prop['EstStart']
+    estEnd = prop['EstEnd']
+    estStartMonthInt = 0
+    estEndMonthInt = 0
+
+    if(estStart):
+        estStartMonthInt = datetime.datetime.strptime(estStart, '%B').date().month
+    if(estEnd):
+        estEndMonthInt = datetime.datetime.strptime(estEnd, '%B').date().month
+
 
 print "Done"
