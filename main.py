@@ -1,5 +1,5 @@
-# import android
-# droid = android.Android()
+import android
+droid = android.Android()
 
 
 import math
@@ -22,8 +22,8 @@ class NotifyPrint:
 
 
 
-filename = 'residential.json'
-# filename = '/storage/emulated/0/sl4a/scripts/residential.json'
+# filename = 'residential.json'
+filename = '/storage/emulated/0/sl4a/scripts/residential.json'
 str = None
 with open(filename) as f:
     str = f.read();
@@ -34,8 +34,8 @@ gps = DummyGPS()
 #gps = SL4AGPS()
 
 radiusOfNotif = 5
-iNotifyPrint = NotifyPrint()
-#iNotifyPrint = NotifySpeak()
+#iNotifyPrint = NotifyPrint()
+iNotifyPrint = NotifySpeak()
 
 def CheckIfInsideCoordinate(dataX,dataY,gpsX,gpsY,radius):
     d = math.sqrt( ((dataX-gpsX)**2) + ((dataY-gpsY)**2) )
